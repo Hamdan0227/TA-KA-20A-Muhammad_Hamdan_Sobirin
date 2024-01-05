@@ -40,6 +40,9 @@ class Login extends Controller
         // jika data ditemukan
         if(count($this->model->getData($data["username"],$data["password"])) == 1)
         {
+            // buat session
+            // $req->session()->put("username_loginapp",$data["username"]);
+
             //ambil data username
             $query = $this->model->getData($data["username"],$data["password"]);
             $nama = $query->last()->nama;
@@ -62,4 +65,16 @@ class Login extends Controller
         // kirim nilai variabel "$output" ke "then(result)" pada fetch
         echo json_encode(["output" => $output]);
     }
+
+    //fungsi untuk logout
+    // function setLogout(Request $req){
+    //     //hapus session
+    //     $req->session()->forget('username_backend');
+
+    //     //hapus cookie
+    //     Cookie::queue(Cookie::forget("cookie_backend"));
+
+    //     //alihkan ke halaman login
+    //     return redirect("/login");
+    // }
 }

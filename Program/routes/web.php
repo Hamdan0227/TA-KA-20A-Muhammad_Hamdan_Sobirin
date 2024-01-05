@@ -20,6 +20,17 @@ use App\Http\Controllers\Dashboard;
 // });
 
     // buat rout halaman login
-    Route::get('/login',[Login::class,'index']);
+    Route::get('/',[Login::class,'index']);
 
-    
+// buat route halaman dashboard
+Route::get('/admin',[Dashboard::class,'index']);
+
+// buat route halaman dashboard (view)
+Route::get('/view',[Dashboard::class,'getView']);
+
+
+// buat route untuk ambil data login
+Route::post('/login/get',[Login::class,'getLogin']);
+
+
+// Route::get('/',[Dashboard::class,'dashboard']);

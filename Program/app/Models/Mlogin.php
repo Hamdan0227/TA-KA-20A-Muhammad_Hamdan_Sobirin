@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class Mlogin extends Model
 {
-    // use HasFactory;
+     // use HasFactory;
     // buat fungsi untuk ambil ambil data login
     function getdata($username, $password)
     {

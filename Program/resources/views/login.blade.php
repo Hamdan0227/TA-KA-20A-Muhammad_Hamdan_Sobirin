@@ -19,7 +19,7 @@
     <!-- tampilan login -->
     <main id="main_login" class="flex items-center justify-center h-screen">
         <!-- frame login -->
-        <section id="section_frame" class="w-1/3 border-2 border-indigo-100 rounded-xl p-5 bg-indigo-100">
+        <section id="section_frame" class="w-1/3 border-2 border-indigo-400 rounded-xl p-5 bg-indigo-100">
             <!-- area judul -->
             <section id="section_judul" class="mb-5 text-center">
                 APOTEK
@@ -94,18 +94,65 @@
             }
             // jika txt_username atau txt_password diisi
             else {
-                alert("Username / Password Sudah Diisi");
+
+                let form = new FormData();
+                form.append("username", txt_username.value);
+                form.append("password", txt_password.value);
+                form.append("ingat", ingat);
+
+                fetch("{{ url('/login/get') }}", {
+                        method: "POST",
+                        headers: {
+                            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf_token"]').content
+                        },
+                        body: form
+                    })
+
+                    .then((response) => response.json())
+                    .then((result) => {
+                        // jika hasil "result" = 1
+                        if (result.output == 1) {
+                            // alihkan ke halaman dashboard
+                            location.href = "{{ url('/admin') }}";
+                        }
+                        // jika hasil "result" != 1
+                        else {
+                            alert("Username / Password Tidak Ditemukan !");
+                        }
+                    })
+                    // jika proses "fetch" gagal
+                    .catch((error) => {
+                        alert("Data Gagal Dikirim !")
+                    });
 
             }
 
 
         }
 
+        function setFilterInput(e)
+       {
+            // inisialisasi variabel 
+            let key_code = document ? e.keyCode : e.which;
+
+
+            // Blok character "=","space","(")","(')",
+            if(key_code == 61 || key_code == 32 || key_code == 34 || key_code == 39)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+       } 
+
         // event untuk btn_batal
         btn_batal.addEventListener('click', setRefresh);
 
         function setRefresh() {
-            location.href = "{{ url('/login') }}";
+            location.href = "{{ url('/') }}";
         }
     </script>
 </body>
